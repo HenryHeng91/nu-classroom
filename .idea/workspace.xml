@@ -2,38 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1f3d4c2d-3e32-483b-b823-8b7852858e87" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/NU-Classroom.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/commandlinetools/Tool_based_on_Symfony_Console_5_7_19_6_48_AM_artisan.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/commandlinetools/schemas/frameworkDescriptionVersion1.1.4.xsd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources/287135e3-46c8-4c11-99c5-f82239f7ffa0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/hooks.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/image.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/voyager-hooks.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/voyager.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/seeds/DataRowsTableSeeder.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/seeds/DataTypesTableSeeder.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/seeds/MenuItemsTableSeeder.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/seeds/MenusTableSeeder.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/seeds/PermissionRoleTableSeeder.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/seeds/PermissionsTableSeeder.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/seeds/RolesTableSeeder.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/seeds/SettingsTableSeeder.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/seeds/TranslationsTableSeeder.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/seeds/VoyagerDatabaseSeeder.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/seeds/VoyagerDummyDatabaseSeeder.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hooks/hooks.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/filesystems.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/filesystems.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -41,7 +11,7 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
+  <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
   </component>
   <component name="DatabaseView">
@@ -75,15 +45,42 @@
     <select />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>XDebug</find>
+      <find>zend_extension=&lt;path_to_zend_debugger&gt; zend_extension=&lt;path_to_zend_optimizer&gt;</find>
+      <find>Xdebug</find>
+    </findStrings>
   </component>
   <component name="FrameworkCommandLineHistory">
     <commandsHistory>
-      <command text="artisan voyager:install" />
-      <command text="artisan migrate:rollback" />
-      <command text="artisan voyager:install" />
-      <command text="artisan key:generate" />
-      <command text="artisan voyager:install" />
+      <command text="artisan make:model Models/VirtualClass -mcr" />
+      <command text="artisan make:model Models/Organization -mcr" />
+      <command text="artisan make:model Models/AnalyticEvent-mcr" />
+      <command text="artisan make:model Models/EventCode-mcr" />
+      <command text="artisan make:model Models/ClassworkType-mcr" />
+      <command text="artisan make:model Models/PostView-mcr" />
+      <command text="artisan make:model Models/AnalyticEvent -mcr" />
+      <command text="artisan make:model Models/EventCode -mcr" />
+      <command text="artisan make:model Models/ClassworkType -mcr" />
+      <command text="artisan make:model Models/PostView -mcr" />
+      <command text="artisan make:model Models/PostLike -mcr" />
+      <command text="artisan make:model Models/CommentLike -mcr" />
+      <command text="artisan make:model Models/Post -mcr" />
+      <command text="artisan make:model Models/Assignment -mcr" />
+      <command text="artisan make:model Models/AssignmentSubmit -mcr " />
+      <command text="artisan make:model Models/AnnouncementClass -mcr " />
+      <command text="artisan make:model Models/AnnouncementUser -mcr " />
+      <command text="artisan make:model Models/AnnouncementOrganization -mcr " />
+      <command text="artisan make:model Models/Comment -mcr " />
+      <command text="artisan make:model Models/Exam -mcr " />
+      <command text="artisan make:model Models/Question -mcr " />
+      <command text="artisan make:model Models/QuestionType -mcr " />
+      <command text="artisan make:model Models/Answer -mcr " />
+      <command text="artisan make:model Models/UserAnswer -mcr " />
+      <command text="artisan make:model Models/File -mcr " />
     </commandsHistory>
   </component>
   <component name="Git.Settings">
@@ -95,12 +92,15 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/.env" />
         <option value="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" />
+        <option value="C:/xampp/php/php.ini" />
+        <option value="$PROJECT_DIR$/.env" />
+        <option value="$PROJECT_DIR$/config/filesystems.php" />
       </list>
     </option>
   </component>
-  <component name="PhpWorkspaceProjectConfiguration">
+  <component name="PhpWebServerValidation" path_to_validation_script="C:\Users\USER\Documents\Laravel\NU-Classroom" selected_validation_type="LOCAL" web_path_to_validation_script="http://127.0.0.1/" />
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP 7.1">
     <include_path>
       <path value="$PROJECT_DIR$/vendor/composer" />
       <path value="$PROJECT_DIR$/vendor/filp/whoops" />
@@ -211,6 +211,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -233,7 +234,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -241,10 +241,11 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="database.console.LAST_STATE" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/artisan" />
+    <property name="editor.config.ad.shown" value="true" />
+    <property name="last_opened_file_path" value="C:/xampp/php/ext/php_xdebug-2.7.2-7.1-vc14-x86_64.dll" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="settings.editor.selected.configurable" value="preferences.startup.tasks" />
+    <property name="settings.editor.selected.configurable" value="reference.webide.settings.project.settings.php" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -281,12 +282,14 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1557186115618</updated>
-      <workItem from="1557186118636" duration="2280000" />
+      <workItem from="1557186118636" duration="2538000" />
+      <workItem from="1557271414219" duration="3150000" />
+      <workItem from="1557358022425" duration="2246000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2280000" />
+    <option name="totallyTimeSpent" value="7934000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -300,14 +303,12 @@
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <layout>
-      <window_info id="Favorites" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20735608" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.21162046" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Command Line Tools Console" weight="0.5980498" />
-      <window_info anchor="bottom" id="Database Console" weight="0.32936078" />
+      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Docker" order="0" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="1" />
-      <window_info anchor="bottom" id="Terminal" order="2" weight="0.32936078" />
+      <window_info anchor="bottom" id="Terminal" order="2" weight="0.3288889" />
       <window_info anchor="bottom" id="Event Log" order="3" side_tool="true" weight="0.32936078" />
       <window_info anchor="bottom" id="Message" order="4" />
       <window_info anchor="bottom" id="Find" order="5" weight="0.32936078" />
@@ -316,11 +317,13 @@
       <window_info anchor="bottom" id="Cvs" order="8" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="9" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="10" weight="0.32936078" />
+      <window_info anchor="bottom" id="Database Console" order="11" weight="0.32936078" />
+      <window_info anchor="bottom" id="Command Line Tools Console" order="12" weight="0.40444446" />
       <window_info anchor="right" id="Database" order="0" weight="0.32995737" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="1" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="3" weight="0.25" />
-      <window_info anchor="right" id="Version Control" order="4" weight="0.32889125" />
+      <window_info active="true" anchor="right" id="Version Control" order="4" visible="true" weight="0.32889125" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -347,6 +350,20 @@
                 </list>
               </option>
             </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list />
+          </value>
+        </entry>
+        <entry key="User">
+          <value>
+            <list />
           </value>
         </entry>
       </map>
@@ -382,10 +399,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/config/filesystems.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="348">
+          <caret line="50" column="21" lean-forward="true" selection-start-line="50" selection-start-column="21" selection-end-line="50" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/.env">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" column="17" selection-start-line="16" selection-start-column="17" selection-end-line="16" selection-end-column="17" />
+        <state relative-caret-position="68">
+          <caret line="4" column="29" selection-start-line="4" selection-start-column="29" selection-end-line="4" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/xampp/php/php.ini">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="416">
+          <caret line="1987" column="23" selection-start-line="1987" selection-start-column="23" selection-end-line="1987" selection-end-column="23" />
         </state>
       </provider>
     </entry>
