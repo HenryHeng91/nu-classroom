@@ -15,6 +15,16 @@ class CreateAnalyticEventsTable extends Migration
     {
         Schema::create('analytic_events', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('user_id');
+            $table->string('device_id', 250);
+            $table->string('device_brandname', 250);
+            $table->string('device_modelname', 250);
+            $table->string('device_os', 100);
+            $table->bigInteger('event_id');
+            $table->datetime('event_start');
+            $table->datetime('event_end');
+            $table->double('event_duration_in_mn');
+            $table->uuid('guid')->unique();
             $table->timestamps();
         });
     }

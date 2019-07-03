@@ -15,6 +15,22 @@ class CreateVirtualClassesTable extends Migration
     {
         Schema::create('virtual_classes', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('class_title', 150);
+            $table->text('description');
+            $table->bigInteger('instructor_id');
+            $table->string('url', 255)->unique();
+            $table->bigInteger('category_id')->nullable();
+            $table->bigInteger('access');
+            $table->bigInteger('status');
+            $table->integer('members_count')->default(0);
+            $table->bigInteger('organization_id')->nullable();
+            $table->dateTime('start_date')->default(now());
+            $table->dateTime('end_date')->nullable();
+            $table->timestamp('class_start_time')->nullable();
+            $table->timestamp('class_end_time')->nullable();
+            $table->string('class_days');
+            $table->string('color', 6);
+            $table->uuid('guid')->unique();
             $table->timestamps();
         });
     }

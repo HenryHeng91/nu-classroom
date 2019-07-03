@@ -15,6 +15,12 @@ class CreateOrganizationsTable extends Migration
     {
         Schema::create('organizations', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('name', 150);
+            $table->string('country', 150);
+            $table->string('city', 150);
+            $table->text('description');
+            $table->integer('type_id');
+            $table->uuid('guid')->unique();
             $table->timestamps();
         });
     }

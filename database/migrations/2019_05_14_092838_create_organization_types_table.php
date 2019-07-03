@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAssignmentSubmitsTable extends Migration
+class CreateOrganizationTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,8 @@ class CreateAssignmentSubmitsTable extends Migration
      */
     public function up()
     {
-        Schema::create('assignment_submits', function (Blueprint $table) {
+        Schema::create('organization_types', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('user_id');
-            $table->bigInteger('assignment_id');
-            $table->bigInteger('file_id');
-            $table->uuid('guid');
             $table->timestamps();
         });
     }
@@ -30,6 +26,6 @@ class CreateAssignmentSubmitsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('assignment_submits');
+        Schema::dropIfExists('organization_types');
     }
 }

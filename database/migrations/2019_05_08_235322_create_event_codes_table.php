@@ -15,6 +15,10 @@ class CreateEventCodesTable extends Migration
     {
         Schema::create('event_codes', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('code', 10);
+            $table->string('name', 100);
+            $table->string('detail');
+            $table->uuid('guid');
             $table->timestamps();
         });
     }
