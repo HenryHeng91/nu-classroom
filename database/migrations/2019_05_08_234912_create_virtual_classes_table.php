@@ -18,7 +18,7 @@ class CreateVirtualClassesTable extends Migration
             $table->string('class_title', 150);
             $table->text('description');
             $table->bigInteger('instructor_id');
-            $table->string('url', 255)->unique();
+            $table->string('url')->unique();
             $table->bigInteger('category_id')->nullable();
             $table->bigInteger('access');
             $table->bigInteger('status');
