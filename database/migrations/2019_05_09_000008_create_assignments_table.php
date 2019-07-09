@@ -22,7 +22,7 @@ class CreateAssignmentsTable extends Migration
             $table->datetime('start_date');
             $table->datetime('end_date');
             $table->bigInteger('file_id');
-            $table->uuid('guid');
+            $table->uuid('guid')->unique();
             $table->timestamps();
         });
     }

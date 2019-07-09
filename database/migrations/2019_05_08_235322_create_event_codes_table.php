@@ -17,8 +17,8 @@ class CreateEventCodesTable extends Migration
             $table->bigIncrements('id');
             $table->string('code', 10);
             $table->string('name', 100);
-            $table->string('detail');
-            $table->uuid('guid');
+            $table->string('detail')->nullable();
+            $table->uuid('guid')->unique();
             $table->timestamps();
         });
     }

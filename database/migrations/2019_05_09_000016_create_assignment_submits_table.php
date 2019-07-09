@@ -18,7 +18,7 @@ class CreateAssignmentSubmitsTable extends Migration
             $table->bigInteger('user_id');
             $table->bigInteger('assignment_id');
             $table->bigInteger('file_id');
-            $table->uuid('guid');
+            $table->uuid('guid')->unique();
             $table->timestamps();
         });
     }

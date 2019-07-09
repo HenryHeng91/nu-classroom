@@ -16,7 +16,7 @@ class CreateClassworkTypesTable extends Migration
         Schema::create('classwork_types', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name', 100);
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->timestamps();
         });
     }

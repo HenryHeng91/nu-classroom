@@ -15,6 +15,19 @@ class CreateAnnouncementClassesTable extends Migration
     {
         Schema::create('announcement_classes', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('title');
+            $table->text('detail');
+            $table->bigInteger('user_id');
+            $table->bigInteger('class_id');
+            $table->datetime('appoint_from');
+            $table->datetime('appoint_to');
+            $table->bigInteger('classwork_id');
+            $table->bigInteger('classwork_type');
+            $table->integer('status');
+            $table->integer('view_counts');
+            $table->integer('like_count');
+            $table->bigInteger('file_id');
+            $table->uuid('guid')->unique();
             $table->timestamps();
         });
     }

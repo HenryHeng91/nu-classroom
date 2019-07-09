@@ -25,7 +25,7 @@ class CreatePostsTable extends Migration
             $table->integer('view_counts');
             $table->integer('like_count');
             $table->bigInteger('file_id');
-            $table->uuid('guid');
+            $table->uuid('guid')->unique();
             $table->timestamps();
         });
     }
