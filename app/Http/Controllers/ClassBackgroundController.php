@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\VirtualClass as VirtualClassResource;
-use App\Models\VirtualClass;
+use App\Models\ClassBackground;
 use Illuminate\Http\Request;
 
-class VirtualClassController extends Controller
+class ClassBackgroundController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +14,7 @@ class VirtualClassController extends Controller
      */
     public function index()
     {
-        return VirtualClassResource::collection(VirtualClass::all());
+        //
     }
 
     /**
@@ -42,10 +41,10 @@ class VirtualClassController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\VirtualClass  $virtualClass
+     * @param  \App\Models\ClassBackground  $classBackground
      * @return \Illuminate\Http\Response
      */
-    public function show(VirtualClass $virtualClass)
+    public function show(ClassBackground $classBackground)
     {
         //
     }
@@ -53,10 +52,10 @@ class VirtualClassController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\VirtualClass  $virtualClass
+     * @param  \App\Models\ClassBackground  $classBackground
      * @return \Illuminate\Http\Response
      */
-    public function edit(VirtualClass $virtualClass)
+    public function edit(ClassBackground $classBackground)
     {
         //
     }
@@ -65,10 +64,10 @@ class VirtualClassController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\VirtualClass  $virtualClass
+     * @param  \App\Models\ClassBackground  $classBackground
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, VirtualClass $virtualClass)
+    public function update(Request $request, ClassBackground $classBackground)
     {
         //
     }
@@ -76,10 +75,10 @@ class VirtualClassController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\VirtualClass  $virtualClass
+     * @param  \App\Models\ClassBackground  $classBackground
      * @return \Illuminate\Http\Response
      */
-    public function destroy(VirtualClass $virtualClass)
+    public function destroy(ClassBackground $classBackground)
     {
         //
     }

@@ -21,4 +21,8 @@ class VirtualClass extends Model
     public function students(){
         return $this->belongsToMany('App\User', 'classes_students', 'class_id', 'user_id');
     }
+
+    public function classBackground(){
+        return $this->belongsTo('App\Models\ClassBackground');
+    }
 }
