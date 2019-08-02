@@ -11,7 +11,7 @@ class AnnouncementOrganization extends Model
     }
 
     public function viewers(){
-        return $this->belongsToMany('App\User', 'announcement_organizatoins_views', 'announcementorganizatoins_id', 'user_id');
+        return $this->belongsToMany('App\Models\AppUser', 'announcement_organizatoins_views', 'announcementorganizatoins_id', 'user_id');
     }
 
     public function file(){

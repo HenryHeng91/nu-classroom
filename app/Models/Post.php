@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     public function user(){
-        return $this->belongsTo('App\User', 'user_id');
+        return $this->belongsTo('App\Models\AppUser', 'user_id');
     }
 
     public function class(){
@@ -31,11 +31,11 @@ class Post extends Model
     }
 
     public function viewers(){
-        return $this->belongsToMany('App\User', 'post_views', 'post_id', 'user_id');
+        return $this->belongsToMany('App\Models\AppUser', 'post_views', 'post_id', 'user_id');
     }
 
     public function likers(){
-        return $this->belongsToMany('App\User', 'post_likes', 'post_id', 'user_id');
+        return $this->belongsToMany('App\Models\AppUser', 'post_likes', 'post_id', 'user_id');
     }
 
     public function comments(){

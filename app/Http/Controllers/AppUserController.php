@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\VirtualClassResource as VirtualClassResource;
-use App\Models\VirtualClass;
+use App\Models\AppUser;
 use Illuminate\Http\Request;
 
-class VirtualClassController extends Controller
+class AppUserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +14,7 @@ class VirtualClassController extends Controller
      */
     public function index()
     {
-        $classes = VirtualClass::orderByDesc('created_at')->paginate();
-        return VirtualClassResource::collection($classes);
+        //
     }
 
     /**
@@ -43,10 +41,10 @@ class VirtualClassController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\VirtualClass  $virtualClass
+     * @param  \App\Models\AppUser  $appUser
      * @return \Illuminate\Http\Response
      */
-    public function show(VirtualClass $virtualClass)
+    public function show(AppUser $appUser)
     {
         //
     }
@@ -54,10 +52,10 @@ class VirtualClassController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\VirtualClass  $virtualClass
+     * @param  \App\Models\AppUser  $appUser
      * @return \Illuminate\Http\Response
      */
-    public function edit(VirtualClass $virtualClass)
+    public function edit(AppUser $appUser)
     {
         //
     }
@@ -66,10 +64,10 @@ class VirtualClassController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\VirtualClass  $virtualClass
+     * @param  \App\Models\AppUser  $appUser
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, VirtualClass $virtualClass)
+    public function update(Request $request, AppUser $appUser)
     {
         //
     }
@@ -77,10 +75,10 @@ class VirtualClassController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\VirtualClass  $virtualClass
+     * @param  \App\Models\AppUser  $appUser
      * @return \Illuminate\Http\Response
      */
-    public function destroy(VirtualClass $virtualClass)
+    public function destroy(AppUser $appUser)
     {
         //
     }

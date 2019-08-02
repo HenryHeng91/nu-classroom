@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class VirtualClass extends Model
 {
     public function instructor(){
-        return $this->belongsTo('App\User', 'id', 'instructor_id');
+        return $this->belongsTo('App\Models\AppUser', 'instructor_id', 'id');
     }
 
     public function category(){
@@ -19,7 +19,7 @@ class VirtualClass extends Model
     }
 
     public function students(){
-        return $this->belongsToMany('App\User', 'classes_students', 'class_id', 'user_id');
+        return $this->belongsToMany('App\Models\AppUser', 'classes_students', 'class_id', 'user_id');
     }
 
     public function classBackground(){
