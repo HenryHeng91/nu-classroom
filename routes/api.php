@@ -18,4 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::resource('classes', 'VirtualClassController');
+Route::group(['middleware' => 'apiAuth', 'prefix' => 'v1'], function () {
+    Route::resource('classes', 'VirtualClassController');
+
+});

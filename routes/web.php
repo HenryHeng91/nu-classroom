@@ -11,6 +11,8 @@
 |
 */
 
+use Illuminate\Support\Facades\Route;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -18,4 +20,12 @@ Route::get('/', function () {
 
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
+});
+
+
+Route::group(['prefix' => 'test'], function () {
+    Route::get('/accountkit', ['uses' => 'Test\AccountkitController@index', 'as' => 'index']);
+    Route::post('/login', 'Test\AccountkitController@login');
+    Route::get('/logout', 'Test\AccountkitController@logout');
+    Route::get('/test/{accessToken}/{intervalSec}', 'Test\AccountkitController@test');
 });
