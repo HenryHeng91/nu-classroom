@@ -20,5 +20,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::group(['middleware' => 'apiAuth', 'prefix' => 'v1'], function () {
     Route::resource('classes', 'VirtualClassController');
+    Route::get('me', 'AppUserController@show');
+    Route::put('me', 'AppUserController@update');
+    Route::post('me/profilepicutre', 'AppUserController@uploadprofilepic');
+    Route::delete('me', 'AppUserController@destroy');
 
 });

@@ -51,7 +51,7 @@ class ApiAuth
             }
 
             $userData = $this->getData();
-            $user = AppUser::where('accountkit_id', $userData['userId'])->with(['posts', 'posts.category', 'posts.category.parentCategory'])->first();
+            $user = AppUser::where('accountkit_id', $userData['userId'])->first();
             if ($user == null){
                 $newUser = new AppUser();
                 $newUser->accountkit_id = $userData['userId'];
@@ -64,11 +64,11 @@ class ApiAuth
                 $newUser->status = 1;
                 $newUser->save();
                 $user = $newUser;
-                $request->merge(['NU_CLASSROOM_USER' => ['userId' => $user->id, 'status' => 'new' ]]);
+                $request->merge(['NU_CLASSROOM_USER' => ['userId' => $user->guid, 'status' => 'new' ]]);
             } else {
                 $user->access_token = $userData['userAccessToken'];
                 $user->save();
-                $request->merge(['NU_CLASSROOM_USER' => ['userId' => $user->id, 'status' => 'old' ]]);
+                $request->merge(['NU_CLASSROOM_USER' => ['userId' => $user->guid, 'status' => 'old' ]]);
             }
 
             return $next($request);

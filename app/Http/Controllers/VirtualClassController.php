@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\VirtualClassResource as VirtualClassResource;
 use App\Models\VirtualClass;
+use ContextHelper;
 use Illuminate\Http\Request;
 
 class VirtualClassController extends Controller
@@ -15,7 +16,8 @@ class VirtualClassController extends Controller
      */
     public function index()
     {
-        $classes = VirtualClass::orderByDesc('created_at')->paginate();
+        $userId = ContextHelper::GetRequestUserId();
+        $classes = VirtualClass::getAllClasses($userId)->paginate();
         return VirtualClassResource::collection($classes);
     }
 
