@@ -2,12 +2,31 @@
 
 namespace App\Models;
 
+use App\Http\Controllers\Enums\AccessEnum;
+use App\Http\Controllers\Enums\StatusEnum;
 use ContextHelper;
 use Illuminate\Database\Eloquent\Model;
 use phpDocumentor\Reflection\Types\This;
+use Illuminate\Support\Facades\URL;
 
 class VirtualClass extends Model
 {
+    /**
+     * VirtualClass constructor.
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->url = URL::to('/api/v1/'.uniqid());
+        $this->access = AccessEnum::PUBLIC;
+        $this->status = StatusEnum::ACTIVE;
+        $this->start_date = now();
+        $this->color = '#'.dechex(rand(0x000000, 0xFFFFFF));
+        $this->guid = uniqid();
+        $this->classBackgrounds_id = 1;
+
+    }
+
     public function instructor(){
         return $this->belongsTo('App\Models\AppUser', 'instructor_id', 'id');
     }

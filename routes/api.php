@@ -19,7 +19,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::group(['middleware' => 'apiAuth', 'prefix' => 'v1'], function () {
+    Route::get('classes/created', 'VirtualClassController@getCreatedClasses');
+    Route::get('classes/joined', 'VirtualClassController@getJoinedClasses');
+    Route::get('classes/{classGuid}/join', 'VirtualClassController@joinClass');
     Route::resource('classes', 'VirtualClassController');
+
     Route::get('me', 'AppUserController@show');
     Route::put('me', 'AppUserController@update');
     Route::post('me/profilepicutre', 'AppUserController@uploadprofilepic');
