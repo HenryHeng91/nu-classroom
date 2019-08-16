@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AppUserUpdateRequest;
 use App\Http\Resources\AppUserResource;
+use App\Http\Resources\PostResource;
 use App\Models\AppUser;
+use App\Models\Post;
 use http\Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;

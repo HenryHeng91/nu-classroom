@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Controllers\Enums\PostTypeEnum;
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
@@ -17,9 +18,9 @@ class Post extends Model
     //todo: check if this relationship work inside switch logic, so we can do multiple relationship mapping with logic
     public function classWorks(){
         switch ($this->post_type){
-            case 1:
+            case PostTypeEnum::ASSIGNMENT:
                 return $this->hasOne('App\Models\Assignment', 'post_id', 'classwork_id');
-            case 2:
+            case PostTypeEnum::EXAM:
                 return $this->hasOne('App\Models\Exam', 'post_id', 'classwork_id');
             default:
                 return null;

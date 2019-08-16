@@ -4,7 +4,7 @@
 namespace App\Http\Controllers\Enums;
 
 
-class AccessEnum
+class AccessEnum extends AEnum
 {
     const PUBLIC = 1;
     const TEAM = 2;

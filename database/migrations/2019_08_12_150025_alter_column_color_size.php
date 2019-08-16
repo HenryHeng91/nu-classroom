@@ -13,7 +13,7 @@ class AlterColumnColorSize extends Migration
      */
     public function up()
     {
-        Schema::create('virtual_classes', function (Blueprint $table) {
+        Schema::table('virtual_classes', function (Blueprint $table) {
             $table->string('color', 10)->change();
         });
     }
@@ -25,7 +25,7 @@ class AlterColumnColorSize extends Migration
      */
     public function down()
     {
-        Schema::create('virtual_classes', function (Blueprint $table) {
+        Schema::table('virtual_classes', function (Blueprint $table) {
             $table->string('color', 6)->change();
         });
     }

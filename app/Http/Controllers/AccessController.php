@@ -14,7 +14,7 @@ class AccessController extends Controller
      */
     public function index()
     {
-        //
+        return Access::all();
     }
 
     /**

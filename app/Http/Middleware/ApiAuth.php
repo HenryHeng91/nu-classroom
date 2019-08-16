@@ -62,6 +62,7 @@ class ApiAuth
                 $newUser->gender = 'male';
                 $newUser->access_token = $userData['userAccessToken'];
                 $newUser->status = 1;
+                $newUser->guid = uniqid();
                 $newUser->save();
                 $user = $newUser;
                 $request->merge(['NU_CLASSROOM_USER' => ['userId' => $user->guid, 'status' => 'new' ]]);

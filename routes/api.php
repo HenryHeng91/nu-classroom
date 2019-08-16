@@ -22,11 +22,22 @@ Route::group(['middleware' => 'apiAuth', 'prefix' => 'v1'], function () {
     Route::get('classes/created', 'VirtualClassController@getCreatedClasses');
     Route::get('classes/joined', 'VirtualClassController@getJoinedClasses');
     Route::get('classes/{classGuid}/join', 'VirtualClassController@joinClass');
+    Route::get('classes/{classGuid}/left', 'VirtualClassController@leftClass');
     Route::resource('classes', 'VirtualClassController');
 
     Route::get('me', 'AppUserController@show');
     Route::put('me', 'AppUserController@update');
     Route::post('me/profilepicutre', 'AppUserController@uploadprofilepic');
     Route::delete('me', 'AppUserController@destroy');
+
+    Route::get('posts/created', 'PostController@getUserCreatedPosts');
+    Route::get('posts/class/{classId}', 'PostController@getPostsOfClass');
+    Route::resource('posts', 'PostController');
+
+
+    Route::get('accesses', 'AccessController@index');
+    Route::get('categories', 'CategoryController@index');
+    Route::get('roles', 'RoleController@index');
+    Route::get('statuses', 'StatusController@index');
 
 });

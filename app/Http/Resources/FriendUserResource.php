@@ -3,10 +3,9 @@
 namespace App\Http\Resources;
 
 use App\Models\Status;
-use ContextHelper;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class AppUserResource extends JsonResource
+class FriendUserResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -20,7 +19,6 @@ class AppUserResource extends JsonResource
             'id'            => $this->guid,
             'username'      => $this->username,
             'profilePicture'=> asset(env('AVATAR_PATH')).'/'.$this->profile_pic,
-            'accessToken'   => $this->access_token,
             'firstName'     => $this->first_name,
             'lastName'      => $this->last_name,
             'gender'        => $this->gender,
@@ -32,11 +30,7 @@ class AppUserResource extends JsonResource
             'country'       => $this->country,
             'selfDescription'   => $this->self_description,
             'educationLevel'   => $this->education_level,
-            'status'        => Status::find($this->status)->name,
-            'classmates' => FriendUserResource::collection($this->classmates()),
-            'CreatedClasses' => VirtualClassResource::collection($this->createdClasses),
-            'JoinedClasses' => VirtualClassResource::collection($this->joinClasses),
-            'signUpDate'    => $this->created_at,
         ];
+
     }
 }

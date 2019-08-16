@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\VirtualClassCreationRequest;
 use App\Http\Resources\VirtualClassResource as VirtualClassResource;
 use App\Models\AppUser;
+use App\Models\Category;
+use App\Models\ClassBackground;
+use App\Models\Organization;
 use App\Models\VirtualClass;
 use ContextHelper;
 use Illuminate\Http\Request;
@@ -63,8 +67,35 @@ class VirtualClassController extends Controller
 
         if (!$class->students->contains($user)){
             $class->students()->save($user);
+            $class->members_count += 1;
+            $class->save();
         }
 
+        return response('OK', 200);
+    }
+
+    /**
+     * Left a class
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function leftClass($classGuid)
+    {
+        $user = AppUser::find(ContextHelper::GetRequestUserId());
+        $class = VirtualClass::where('guid', $classGuid)->firstOrFail();
+
+        if (null == $class)
+        {
+            return response('Requested class not found.', 400);
+        }
+
+        if (!$class->students->contains($user)){
+            return response('You are not a member of this class!', 400);
+        }
+
+        $user->joinClasses()->detach($class);
+        $class->members_count -= 1;
+        $class->save();
         return response('OK', 200);
     }
 
@@ -73,7 +104,7 @@ class VirtualClassController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(VirtualClassCreationRequest $request)
     {
         //
     }
@@ -86,7 +117,27 @@ class VirtualClassController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = AppUser::find(ContextHelper::GetRequestUserId());
+        $newClass = new VirtualClass();
+        $newClass->class_title = $request->input('classTitle');
+        $newClass->description = $request->input('description');
+        $newClass->category()->associate(Category::where('guid', $request->input('categoryId'))->first());
+
+        if ($request->has('organizationId')){
+            $newClass->organization()->associate(Organization::where('guid', $request->input('organizationId'))->first());
+        }
+        if ($request->has('classBackgroundsId')){
+            $newClass->classBackground()->associate(ClassBackground::where('guid', $request->input('classBackgroundsId'))->first());
+        }
+
+        $newClass->start_date = $request->input('startDate') ?? now();
+        $newClass->end_date = $request->input('endDate');
+        $newClass->class_start_time = $request->input('classStartTime') ?? null;
+        $newClass->class_end_time = $request->input('classEndTime') ?? null;
+        $newClass->class_days = $request->input('classDays') ?? null;
+        $user->createdClasses()->save($newClass);
+
+        return new VirtualClassResource($newClass);
     }
 
     /**

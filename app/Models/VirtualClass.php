@@ -44,7 +44,7 @@ class VirtualClass extends Model
     }
 
     public function classBackground(){
-        return $this->belongsTo('App\Models\ClassBackground');
+        return $this->belongsTo('App\Models\ClassBackground', 'classBackgrounds_id', 'id');
     }
 
     public static function getAllClasses($userId){

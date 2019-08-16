@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PostResource;
+use App\Models\AppUser;
+use App\Models\ClassesStudent;
 use App\Models\Post;
+use App\Models\VirtualClass;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -14,7 +18,11 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $user = AppUser::find(\ContextHelper::GetRequestUserId());
+        $classmatesId = $user->classmates()->pluck('id');
+        $joinClassesIds = ClassesStudent::where('user_id', $user->id)->pluck('class_id');
+        $posts = Post::whereIn('user_id', $classmatesId)->orWhere('class_id', $joinClassesIds)->orWhere('user_id', $user->id)->orderBy('created_at', 'desc');
+        return PostResource::collection($posts->paginate());
     }
 
     /**
@@ -81,5 +89,35 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         //
+    }
+
+    /**
+     * List all user's own posts included questions, exams, assignments, announcements, etc.
+     *
+     * @param  \App\Models\AppUser  $appUser
+     * @return \Illuminate\Http\Response
+     */
+    public function getUserCreatedPosts()
+    {
+        $user = AppUser::find(\ContextHelper::GetRequestUserId());
+        $posts = $user->posts()->orderBy('created_at', 'desc');
+        return PostResource::collection($posts->paginate());
+    }
+
+    /**
+     * List all posts in the class.
+     *
+     * @param  \App\Models\AppUser  $appUser
+     * @return \Illuminate\Http\Response
+     */
+    public function getPostsOfClass($classId)
+    {
+        $user = AppUser::find(\ContextHelper::GetRequestUserId());
+        $class = VirtualClass::where('guid', $classId)->first();
+        if (null == $class){
+            return response('Requested class not found.', 400);
+        }
+        $posts = Post::where('class_id', $class->id);
+        return PostResource::collection($posts->paginate());
     }
 }

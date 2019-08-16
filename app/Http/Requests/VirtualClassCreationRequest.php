@@ -24,16 +24,16 @@ class VirtualClassCreationRequest extends FormRequest
     public function rules()
     {
         return [
-            'class_title' => 'string|required|max:190',
+            'classTitle' => 'string|required|max:190',
             'description' => 'string|nullable',
-            'category_id' => 'string|required',
-            'organization_id' => 'string|nullable',
-            'start_date' => 'date_format:Y-m-d|nullable',
-            'end_date' => 'date_format:Y-m-d|after:start_date|required',
-            'class_start_time' => 'date_format:HH:MM|nullable',
-            'class_end_time' => 'date_format:HH:MM|nullable',
-            'class_days' => 'string|nullable',
-            'classBackgrounds_id' => 'numberic|required'
+            'categoryId' => 'string|exists:categories,guid|required',
+            'organizationId' => 'string|exists:organizations,guid|nullable',
+            'startDate' => 'date_format:Y-m-d|nullable',
+            'endDate' => 'date_format:Y-m-d|after:start_date|required',
+            'classStartTime' => 'date_format:HH:MM|nullable',
+            'classEndTime' => 'date_format:HH:MM|nullable',
+            'classDays' => 'string|nullable',
+            'classBackgroundsId' => 'string|exists:class_backgrounds,guid|required'
         ];
     }
 }

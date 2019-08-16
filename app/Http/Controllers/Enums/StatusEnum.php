@@ -4,7 +4,7 @@
 namespace App\Http\Controllers\Enums;
 
 
-class StatusEnum
+class StatusEnum extends AEnum
 {
     const NEW = 1;
     const ACTIVE = 2;
