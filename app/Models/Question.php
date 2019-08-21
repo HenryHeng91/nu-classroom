@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Question extends Model
 {
+    public function post(){
+        return $this->hasOne('App\Models\Post', 'classwork_id', 'id');
+    }
+
     public function exam(){
         return $this->belongsTo('App\Models\Exam');
     }

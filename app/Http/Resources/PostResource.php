@@ -21,18 +21,34 @@ class PostResource extends JsonResource
         return [
             'id' => $this->guid,
             'detail' => $this->detail,
-            'user' => $this->user,
-            'class' => $this->class,
+            'user' => new FriendUserResource($this->user),
+            'class' => new VirtualClassResource($this->class),
             'access' => AccessEnum::getEnumName($this->access),
             'postType' => PostTypeEnum::getEnumName($this->post_type),
-            'classwork' => $this->classWorks,
+            'classwork' => self::GetClassWorkResource($this),
             'status' => StatusEnum::getEnumName($this->status),
             'viewCount' => $this->view_counts,
+            'viewers' => FriendUserResource::collection($this->viewers),
             'likeCount' => $this->like_count,
+            'likers' => FriendUserResource::collection($this->likers),
             'commentCount' => $this->comments->count(),
             'file' => $this->file,
             'createDate' => $this->created_at,
             'lastUpdateDate' => $this->updated_at,
         ];
+    }
+
+    function GetClassWorkResource($post){
+        switch ($post->post_type){
+            case PostTypeEnum::ASSIGNMENT:
+                return new AssignmentResource($post->classWorks());
+            case PostTypeEnum::EXAM:
+                return new ExamResource($post->classWorks());
+            case PostTypeEnum::QUESTION:
+                return new QuestionResource($post->classWorks());
+            case PostTypeEnum::POST:
+            default:
+                return null;
+        }
     }
 }

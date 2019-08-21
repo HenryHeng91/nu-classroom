@@ -15,20 +15,21 @@ class Post extends Model
         return $this->belongsTo('App\Models\VirtualClass', 'class_id');
     }
 
-    //todo: check if this relationship work inside switch logic, so we can do multiple relationship mapping with logic
     public function classWorks(){
         switch ($this->post_type){
             case PostTypeEnum::ASSIGNMENT:
-                return $this->hasOne('App\Models\Assignment', 'post_id', 'classwork_id');
+                return Assignment::find($this->classwork_id);
             case PostTypeEnum::EXAM:
-                return $this->hasOne('App\Models\Exam', 'post_id', 'classwork_id');
+                return Exam::find($this->classwork_id);
+            case PostTypeEnum::QUESTION:
+                return Question::find($this->classwork_id);
             default:
                 return null;
         }
     }
 
     public function file(){
-        return $this->hasOne('App\Models\File');
+        return $this->hasOne('App\Models\File', 'id', 'file_id');
     }
 
     public function viewers(){

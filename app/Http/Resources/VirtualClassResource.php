@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources;
 
+use App\Http\Controllers\Enums\AccessEnum;
+use App\Http\Controllers\Enums\StatusEnum;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class VirtualClassResource extends JsonResource
@@ -21,8 +23,8 @@ class VirtualClassResource extends JsonResource
             'instructor' => $this->instructor,
             'url' => $this->url,
             'category' => $this->category,
-            'access' => $this->access,
-            'status' => $this->status,
+            'access' => AccessEnum::getEnumName($this->access),
+            'status' => StatusEnum::getEnumName($this->status),
             'membersCount' => $this->members_count,
             'organization' => $this->organization,
             'startDate' => $this->start_date,
