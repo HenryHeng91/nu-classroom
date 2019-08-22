@@ -23,6 +23,7 @@ Route::group(['middleware' => 'apiAuth', 'prefix' => 'v1'], function () {
     Route::get('classes/joined', 'VirtualClassController@getJoinedClasses');
     Route::get('classes/{classGuid}/join', 'VirtualClassController@joinClass');
     Route::get('classes/{classGuid}/left', 'VirtualClassController@leftClass');
+    Route::get('classes/{classGuid}', 'VirtualClassController@show');
     Route::resource('classes', 'VirtualClassController');
 
     Route::get('me', 'AppUserController@show');

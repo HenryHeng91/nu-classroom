@@ -28,6 +28,7 @@ class PostCreateRequest extends AApiRequest
             'access' => 'in:PUBLIC,TEAM,PRIVATE|required',
             'postType' => 'in:POST,ASSIGNMENT,EXAM,QUESTION|required',
             'classwork' => 'required_if:postType,>,0',
+            'questions' => 'required_if:postType,=,EXAM|array',
             'fileId' => 'exists:files,guid|nullable'
         ];
 

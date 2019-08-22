@@ -22,7 +22,7 @@ class PostResource extends JsonResource
             'id' => $this->guid,
             'detail' => $this->detail,
             'user' => new FriendUserResource($this->user),
-            'class' => new VirtualClassResource($this->class),
+            'classId' => $this->class->guid,
             'access' => AccessEnum::getEnumName($this->access),
             'postType' => PostTypeEnum::getEnumName($this->post_type),
             'classwork' => self::GetClassWorkResource($this),

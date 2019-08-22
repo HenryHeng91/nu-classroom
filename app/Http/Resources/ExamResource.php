@@ -21,7 +21,7 @@ class ExamResource extends JsonResource
             'postId' => $this->post->guid,
             'submitCount' => $this->submit_count,
             'submits' => $this->examSubmits,
-            'questions' => $this->questions,
+            'questions' => QuestionResource::collection($this->questions),
             'startDate' => $this->start_date,
             'endDate' => $this->end_date,
             'file' => $this->file,

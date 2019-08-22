@@ -18,13 +18,7 @@ class QuestionResource extends JsonResource
             'id' => $this->guid,
             'title' => $this->title,
             'description' => $this->description,
-            'postId' => $this->post->guid,
-            'submitCount' => $this->submit_count,
-            'submits' => $this->examSubmits,
-            'questions' => $this->questions,
-            'startDate' => $this->start_date,
-            'endDate' => $this->end_date,
-            'file' => $this->file,
+            'postId' => $this->post->guid ?? null,
             'createDate' => $this->created_at,
             'updateDate' => $this->updated_at
         ];

@@ -58,7 +58,7 @@ class PostController extends Controller
         $newPost = new Post();
         $newPost->detail = $request->input('detail');
         $newPost->user_id = $user->id;
-        $newPost->class_id = $class->id || null;
+        $newPost->class_id = $class->id ?? null;
         $newPost->access = AccessEnum::getEnumByName($request->input('access'));
         $newPost->post_type = PostTypeEnum::getEnumByName($request->input('postType'));
         $newPost->status = StatusEnum::ACTIVE;
@@ -98,6 +98,20 @@ class PostController extends Controller
                     $classwork->file_id = $request->input('classwork.file_id || null');
                     $classwork->guid = uniqid();
                     $classwork->save();
+
+                    $questions = array();
+                    foreach ($request->input('questions') as $q){
+                        $question = new Question();
+                        $question->title = $q['title'];
+                        $question->description = $q['description'];
+                        $question->exam_id = $classwork->id;
+                        $question->question_type = 1;
+                        $question->point = 0;
+                        $question->guid = uniqid();
+                        array_push($questions, $question);
+                    }
+
+                    $classwork->questions()->saveMany($questions);
                     break;
                 case PostTypeEnum::QUESTION:
                     $classwork = new Question();
@@ -191,7 +205,7 @@ class PostController extends Controller
         if (null == $class){
             return response('Requested class not found.', 400);
         }
-        $posts = Post::where('class_id', $class->id);
-        return PostResource::collection($posts->paginate());
+        $posts = Post::where('class_id', $class->id)->paginate();
+        return PostResource::collection($posts);
     }
 }
