@@ -17,7 +17,7 @@ class VirtualClass extends Model
     public function __construct()
     {
         parent::__construct();
-        $this->url = URL::to('/api/v1/'.uniqid());
+        $this->url = URL::to('/api/v1/classes/'.uniqid().'/join');
         $this->access = AccessEnum::PUBLIC;
         $this->status = StatusEnum::ACTIVE;
         $this->start_date = now();

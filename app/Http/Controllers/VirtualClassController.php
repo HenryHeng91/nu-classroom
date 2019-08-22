@@ -146,9 +146,13 @@ class VirtualClassController extends Controller
      * @param  \App\Models\VirtualClass  $virtualClass
      * @return \Illuminate\Http\Response
      */
-    public function show(VirtualClass $virtualClass)
+    public function show($classGuid)
     {
-        //
+        $class = VirtualClass::where('guid', $classGuid)->first();
+        if (null == $class){
+            return response('Requested class not found.', 400);
+        }
+        return new VirtualClassResource($class);
     }
 
     /**
