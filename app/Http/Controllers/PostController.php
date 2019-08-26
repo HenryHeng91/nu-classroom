@@ -29,7 +29,7 @@ class PostController extends Controller
     public function index()
     {
         $user = AppUser::find(\ContextHelper::GetRequestUserId());
-        $classmatesId = $user->classmates()->pluck('id');
+        $classmatesId = $user->classmates()->pluck('user_id');
         $joinClassesIds = ClassesStudent::where('user_id', $user->id)->pluck('class_id');
         $posts = Post::whereIn('user_id', $classmatesId)->orWhere('class_id', $joinClassesIds)->orWhere('user_id', $user->id)->orderBy('created_at', 'desc');
         return PostResource::collection($posts->paginate());
@@ -205,7 +205,7 @@ class PostController extends Controller
         if (null == $class){
             return response('Requested class not found.', 400);
         }
-        $posts = Post::where('class_id', $class->id)->paginate();
+        $posts = Post::where('class_id', $class->id)->orderBy('created_at', 'desc')->paginate();
         return PostResource::collection($posts);
     }
 }
