@@ -31,6 +31,8 @@ Route::group(['middleware' => 'apiAuth', 'prefix' => 'v1'], function () {
     Route::post('me/profilepicutre', 'AppUserController@uploadprofilepic');
     Route::delete('me', 'AppUserController@destroy');
 
+    Route::get('posts/{postId}/unlike', 'PostController@unlike');
+    Route::get('posts/{postId}/like', 'PostController@like');
     Route::get('posts/created', 'PostController@getUserCreatedPosts');
     Route::get('posts/class/{classId}', 'PostController@getPostsOfClass');
     Route::resource('posts', 'PostController');

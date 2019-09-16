@@ -24,7 +24,7 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function index()
     {
@@ -38,7 +38,7 @@ class PostController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function create()
     {
@@ -48,8 +48,8 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param PostCreateRequest $request
+     * @return PostResource
      */
     public function store(PostCreateRequest $request)
     {
@@ -137,8 +137,8 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\Response
+     * @param \App\Models\Post $post
+     * @return void
      */
     public function show(Post $post)
     {
@@ -148,8 +148,8 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\Response
+     * @param \App\Models\Post $post
+     * @return void
      */
     public function edit(Post $post)
     {
@@ -159,9 +159,9 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Post $post
+     * @return void
      */
     public function update(Request $request, Post $post)
     {
@@ -171,8 +171,8 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\Response
+     * @param \App\Models\Post $post
+     * @return void
      */
     public function destroy(Post $post)
     {
@@ -182,8 +182,7 @@ class PostController extends Controller
     /**
      * List all user's own posts included questions, exams, assignments, announcements, etc.
      *
-     * @param  \App\Models\AppUser  $appUser
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function getUserCreatedPosts()
     {
@@ -195,7 +194,7 @@ class PostController extends Controller
     /**
      * List all posts in the class.
      *
-     * @param  \App\Models\AppUser  $appUser
+     * @param $classId
      * @return \Illuminate\Http\Response
      */
     public function getPostsOfClass($classId)
@@ -207,5 +206,54 @@ class PostController extends Controller
         }
         $posts = Post::where('class_id', $class->id)->orderBy('created_at', 'desc')->paginate();
         return PostResource::collection($posts);
+    }
+
+    /**
+     * LIke a post
+     *
+     * @param $postId
+     * @return \Illuminate\Http\Response
+     */
+    public function like($postId)
+    {
+        $user = AppUser::find(\ContextHelper::GetRequestUserId());
+        $post = Post::where('guid', $postId)->first();
+
+        if (null == $post){
+            return response("Requested post '$postId' not found.", 400);
+        }
+
+        if (!$post->likers->contains($user->id)){
+            $post->like_count += 1;
+            $post->save();
+            $post->likers()->attach($user->id);
+        }
+
+        return response('', 200);
+    }
+
+    /**
+     * LIke a post
+     *
+     * @param $postId
+     * @return \Illuminate\Http\Response
+     */
+    public function unlike($postId)
+    {
+        $user = AppUser::find(\ContextHelper::GetRequestUserId());
+        $post = Post::where('guid', $postId)->first();
+
+        if (null == $post){
+            return response("Requested post '$postId' not found.", 400);
+        }
+
+        if (!$post->likers->contains($user->id)){
+            return response("Requested user has not like this post '$postId'", 400);
+        }
+
+        $post->like_count -= 1;
+        $post->likers()->detach($user->id);
+        $post->save();
+        return response('', 200);
     }
 }

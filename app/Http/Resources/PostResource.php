@@ -4,8 +4,8 @@ namespace App\Http\Resources;
 
 use App\Http\Controllers\Enums\PostTypeEnum;
 use App\Http\Controllers\Enums\StatusEnum;
-use App\Models\Status;
 use App\Http\Controllers\Enums\AccessEnum;
+use ContextHelper;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class PostResource extends JsonResource
@@ -31,6 +31,7 @@ class PostResource extends JsonResource
             'viewers' => FriendUserResource::collection($this->viewers),
             'likeCount' => $this->like_count,
             'likers' => FriendUserResource::collection($this->likers),
+            'isAlreadyLike' => $this->likers->contains(ContextHelper::GetRequestUserId()),
             'commentCount' => $this->comments->count(),
             'file' => $this->file,
             'createDate' => $this->created_at,
