@@ -5,11 +5,14 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Enums\AccessEnum;
 use App\Http\Controllers\Enums\PostTypeEnum;
 use App\Http\Controllers\Enums\StatusEnum;
+use App\Http\Requests\AddCommentRequest;
 use App\Http\Requests\PostCreateRequest;
+use App\Http\Resources\CommentResource;
 use App\Http\Resources\PostResource;
 use App\Models\AppUser;
 use App\Models\Assignment;
 use App\Models\ClassesStudent;
+use App\Models\Comment;
 use App\Models\Exam;
 use App\Models\File;
 use App\Models\Post;
@@ -256,4 +259,29 @@ class PostController extends Controller
         $post->save();
         return response('', 200);
     }
+
+    /**
+     * add view for a post
+     *
+     * @param $postId
+     * @return \Illuminate\Http\Response
+     */
+    public function addView($postId)
+    {
+        $user = AppUser::find(\ContextHelper::GetRequestUserId());
+        $post = Post::where('guid', $postId)->first();
+
+        if (null == $post){
+            return response("Requested post '$postId' not found.", 400);
+        }
+
+        if (!$post->viewers->contains($user->id)){
+            $post->view_counts += 1;
+            $post->save();
+            $post->viewers()->attach($user->id);
+        }
+
+        return response('', 200);
+    }
+
 }

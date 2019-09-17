@@ -31,11 +31,16 @@ Route::group(['middleware' => 'apiAuth', 'prefix' => 'v1'], function () {
     Route::post('me/profilepicutre', 'AppUserController@uploadprofilepic');
     Route::delete('me', 'AppUserController@destroy');
 
+    Route::get('posts/{postId}/comments', 'CommentController@index');
+    Route::post('posts/{postId}/addcomment', 'CommentController@store');
+    Route::get('posts/{postId}/addview', 'PostController@addView');
     Route::get('posts/{postId}/unlike', 'PostController@unlike');
     Route::get('posts/{postId}/like', 'PostController@like');
     Route::get('posts/created', 'PostController@getUserCreatedPosts');
     Route::get('posts/class/{classId}', 'PostController@getPostsOfClass');
     Route::resource('posts', 'PostController');
+
+    Route::delete('comments/{postId}', 'CommentController@destroy');
 
 
     Route::get('accesses', 'AccessController@index');
