@@ -6,6 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Assignment extends Model
 {
+    /**
+     * Assignment constructor.
+     */
+    public function __construct()
+    {
+        $this->submit_count = 0;
+        parent::__construct();
+
+    }
+
     public function post(){
         return $this->hasOne('App\Models\Post');
     }

@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Enums\AccessEnum;
 use App\Http\Controllers\Enums\PostTypeEnum;
+use App\Http\Controllers\Enums\QuestionTypeEnum;
 use App\Http\Controllers\Enums\StatusEnum;
 use App\Http\Requests\AddCommentRequest;
 use App\Http\Requests\PostCreateRequest;
 use App\Http\Resources\CommentResource;
+use App\Http\Resources\FriendUserResource;
 use App\Http\Resources\PostResource;
 use App\Models\AppUser;
 use App\Models\Assignment;
@@ -19,8 +21,9 @@ use App\Models\Post;
 use App\Models\Question;
 use App\Models\VirtualClass;
 use ContextHelper;
+use Exception;
 use Illuminate\Http\Request;
-use mysql_xdevapi\Exception;
+use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
@@ -32,7 +35,7 @@ class PostController extends Controller
     public function index()
     {
         $user = AppUser::find(\ContextHelper::GetRequestUserId());
-        $classmatesId = $user->classmates()->pluck('user_id');
+        $classmatesId = $user->classmates()->get()->pluck('user_id');
         $joinClassesIds = ClassesStudent::where('user_id', $user->id)->pluck('class_id');
         $posts = Post::whereIn('user_id', $classmatesId)->orWhere('class_id', $joinClassesIds)->orWhere('user_id', $user->id)->orderBy('created_at', 'desc');
         return PostResource::collection($posts->paginate());
@@ -58,83 +61,44 @@ class PostController extends Controller
     {
         $user = AppUser::find(ContextHelper::GetRequestUserId());
         $class = VirtualClass::where('guid', $request->input('classId'))->first();
-        $newPost = new Post();
-        $newPost->detail = $request->input('detail');
-        $newPost->user_id = $user->id;
-        $newPost->class_id = $class->id ?? null;
-        $newPost->access = AccessEnum::getEnumByName($request->input('access'));
-        $newPost->post_type = PostTypeEnum::getEnumByName($request->input('postType'));
-        $newPost->status = StatusEnum::ACTIVE;
-        $newPost->view_counts = 0;
-        $newPost->like_count = 0;
-        $newPost->guid = uniqid();
 
-        if ($request->has('fileId')){
-            $newPost->file()->save(File::where('guid', $request->input('fileId'))->first());
-        }
+        //Saving new post:
+        try{
+            //opening transaction
+            DB::beginTransaction();
 
-        $newPost->save();
+            $newPost = new Post();
+            $newPost->detail = $request->input('detail');
+            $newPost->user_id = $user->id;
+            $newPost->class_id = $class->id ?? null;
+            $newPost->access = AccessEnum::getEnumByName($request->input('access'));
+            $newPost->post_type = PostTypeEnum::getEnumByName($request->input('postType'));
+            $newPost->status = StatusEnum::ACTIVE;
+            $newPost->view_counts = 0;
+            $newPost->like_count = 0;
+            $newPost->guid = uniqid();
 
-        $classwork = null;
-        if ($request->has('classwork')){
-            switch (PostTypeEnum::getEnumByName($request->input('postType'))){
-                case PostTypeEnum::ASSIGNMENT:
-                    $classwork = new Assignment();
-                    $classwork->title = $request->input('classwork.title');
-                    $classwork->description = $request->input('classwork.description');
-                    $classwork->post_id = $newPost->id;
-                    $classwork->submit_count = 0;
-                    $classwork->start_date = $request->input('classwork.startDate');
-                    $classwork->end_date = $request->input('classwork.endDate');
-                    $classwork->file_id = $request->input('classwork.file_id || null');
-                    $classwork->guid = uniqid();
-                    $classwork->save();
-                    break;
-                case PostTypeEnum::EXAM:
-                    $classwork = new Exam();
-                    $classwork->title = $request->input('classwork.title');
-                    $classwork->description = $request->input('classwork.description');
-                    $classwork->post_id = $newPost->id;
-                    $classwork->submit_count = 0;
-                    $classwork->start_date = $request->input('classwork.startDate');
-                    $classwork->end_date = $request->input('classwork.endDate');
-                    $classwork->file_id = $request->input('classwork.file_id || null');
-                    $classwork->guid = uniqid();
-                    $classwork->save();
-
-                    $questions = array();
-                    foreach ($request->input('questions') as $q){
-                        $question = new Question();
-                        $question->title = $q['title'];
-                        $question->description = $q['description'];
-                        $question->exam_id = $classwork->id;
-                        $question->question_type = 1;
-                        $question->point = 0;
-                        $question->guid = uniqid();
-                        array_push($questions, $question);
-                    }
-
-                    $classwork->questions()->saveMany($questions);
-                    break;
-                case PostTypeEnum::QUESTION:
-                    $classwork = new Question();
-                    $classwork->title = $request->input('classwork.title');
-                    $classwork->description = $request->input('classwork.description');
-                    $classwork->post_id = $newPost->id;
-                    $classwork->question_type = 1;
-                    $classwork->point = 0;
-                    $classwork->guid = uniqid();
-                    $classwork->save();
-                    break;
-                default:
-                    $classwork = null;
+            if ($request->has('classwork.fileId')){
+                $file = File::where('guid', $request->input('classwork.fileId'))->first();
+                $newPost->file_id = $file->id;
             }
+
+            $newPost->save();
+
+            if ($request->has('classwork')) {
+                $classwork = Post::ConvertRequestToClasswork($request);
+                $classwork->post_id = $newPost->id;
+                $newPost->classwork_id = $classwork->id ?? null;
+            }
+            $newPost->save();
+
+            DB::commit();
+            return new PostResource($newPost);
+        }catch (Exception $e){
+            DB::rollBack();
+            throw $e;
+//            return response('Server failure. Contact IT.', 500);
         }
-
-        $newPost->classwork_id = $classwork->id ?? null;
-        $newPost->save();
-        return new PostResource($newPost);
-
     }
 
     /**
@@ -283,5 +247,24 @@ class PostController extends Controller
 
         return response('', 200);
     }
+
+    /**
+     * add view for a post
+     *
+     * @param $postId
+     * @return \Illuminate\Http\Response
+     */
+    public function getLikers($postId)
+    {
+        $post = Post::where('guid', $postId)->first();
+
+        if (null == $post){
+            return response("Requested post '$postId' not found.", 400);
+        }
+
+        return FriendUserResource::collection($post->viewers()->paginate());
+    }
+
+
 
 }

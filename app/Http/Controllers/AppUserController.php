@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AppUserUpdateRequest;
 use App\Http\Resources\AppUserResource;
+use App\Http\Resources\FriendUserResource;
 use App\Http\Resources\PostResource;
 use App\Models\AppUser;
 use App\Models\Post;
@@ -99,6 +100,18 @@ class AppUserController extends Controller
         $user->status = 4;
         $user->delete();
         return response('User Deleted', 200);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\AppUser  $appUser
+     * @return \Illuminate\Http\Response
+     */
+    public function getClassmates()
+    {
+        $user = AppUser::find(\ContextHelper::GetRequestUserId());
+        return FriendUserResource::collection($user->classmates()->paginate());
     }
 
     /**

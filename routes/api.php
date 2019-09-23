@@ -26,11 +26,13 @@ Route::group(['middleware' => 'apiAuth', 'prefix' => 'v1'], function () {
     Route::get('classes/{classGuid}', 'VirtualClassController@show');
     Route::resource('classes', 'VirtualClassController');
 
+    Route::get('me/classmates', 'AppUserController@getClassmates');
     Route::get('me', 'AppUserController@show');
     Route::put('me', 'AppUserController@update');
     Route::post('me/profilepicutre', 'AppUserController@uploadprofilepic');
     Route::delete('me', 'AppUserController@destroy');
 
+    Route::get('posts/{postId}/likers', 'PostController@getLikers');
     Route::get('posts/{postId}/comments', 'CommentController@index');
     Route::post('posts/{postId}/addcomment', 'CommentController@store');
     Route::get('posts/{postId}/addview', 'PostController@addView');

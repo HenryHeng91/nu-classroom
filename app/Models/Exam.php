@@ -6,6 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Exam extends Model
 {
+    /**
+     * Exam constructor.
+     */
+    public function __construct()
+    {
+        $this->submit_count = 0;
+        parent::__construct();
+    }
+
     public function post(){
         return $this->hasOne('App\Models\Post', 'classwork_id', 'id');
     }

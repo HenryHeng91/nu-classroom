@@ -33,9 +33,6 @@ class AppUserResource extends JsonResource
             'selfDescription'   => $this->self_description,
             'educationLevel'   => $this->education_level,
             'status'        => Status::find($this->status)->name,
-            'classmates' => FriendUserResource::collection($this->classmates()),
-            'CreatedClasses' => VirtualClassResource::collection($this->createdClasses),
-            'JoinedClasses' => VirtualClassResource::collection($this->joinClasses),
             'signUpDate'    => $this->created_at,
         ];
     }

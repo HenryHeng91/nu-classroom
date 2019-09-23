@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Http\Controllers\Enums\QuestionTypeEnum;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class QuestionResource extends JsonResource
@@ -18,6 +19,9 @@ class QuestionResource extends JsonResource
             'id' => $this->guid,
             'title' => $this->title,
             'description' => $this->description,
+            'questionType' => QuestionTypeEnum::getEnumName($this->question_type),
+            'answers' => AnswerResource::collection($this->answers),
+            'studentAnswers' => UserAnswerResource::collection($this->userAnswers),
             'postId' => $this->post->guid ?? null,
             'createDate' => $this->created_at,
             'updateDate' => $this->updated_at

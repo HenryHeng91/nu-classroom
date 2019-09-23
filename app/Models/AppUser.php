@@ -42,6 +42,6 @@ class AppUser extends Model
         return AppUser::join('classes_students', 'app_users.id', '=', 'classes_students.user_id')
             ->join('virtual_classes', 'classes_students.class_id', '=', 'virtual_classes.id')
             ->where('app_users.id', '<>', $this->id)
-            ->whereIn('virtual_classes.id', $joinClassesIds)->get();
+            ->whereIn('virtual_classes.id', $joinClassesIds);
     }
 }
