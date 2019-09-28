@@ -78,18 +78,22 @@ class PostController extends Controller
             $newPost->like_count = 0;
             $newPost->guid = uniqid();
 
-            if ($request->has('classwork.fileId')){
+            if ($request->has('fileId')){
                 $file = File::where('guid', $request->input('classwork.fileId'))->first();
-                $newPost->file_id = $file->id;
             }
 
             $newPost->save();
 
             if ($request->has('classwork')) {
-                $classwork = Post::ConvertRequestToClasswork($request);
-                $classwork->post_id = $newPost->id;
+                $classwork = Post::ConvertRequestToClasswork($request, $newPost->id);
                 $newPost->classwork_id = $classwork->id ?? null;
+                if (!$classwork instanceof Question){
+                    $classwork->file_id = $file->id;
+                }
+            } else {
+                $newPost->file_id = $file->id;
             }
+
             $newPost->save();
 
             DB::commit();

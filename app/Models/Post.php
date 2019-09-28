@@ -5,6 +5,8 @@ namespace App\Models;
 use App\Http\Controllers\Enums\PostTypeEnum;
 use App\Http\Controllers\Enums\QuestionTypeEnum;
 use App\Http\Requests\PostCreateRequest;
+use App\Services\ClassworkServices\Dto\CreateAnswerDto;
+use App\Services\ClassworkServices\Dto\CreateQuestionDto;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -56,7 +58,7 @@ class Post extends Model
      * @param Post $newPost
      * @return $classwork
      */
-    public static function ConvertRequestToClasswork(PostCreateRequest $request)
+    public static function ConvertRequestToClasswork(PostCreateRequest $request, $postId)
     {
         $type = PostTypeEnum::getEnumByName($request->input('postType'));
         switch ($type) {
@@ -78,11 +80,11 @@ class Post extends Model
         $classwork->title = $request->input('classwork.title');
         $classwork->description = $request->input('classwork.description');
         $classwork->guid = uniqid();
+        $classwork->post_id = $postId;
 
         if ($type == PostTypeEnum::ASSIGNMENT || $type == PostTypeEnum::EXAM){
             $classwork->start_date = $request->input('classwork.startDate');
             $classwork->end_date = $request->input('classwork.endDate');
-            $classwork->file_id = $request->input('classwork.fileId') || null;
         }
 
         $classwork->save();
@@ -99,10 +101,13 @@ class Post extends Model
         $type = PostTypeEnum::getEnumByName($request->input('postType'));
         switch ($type){
             case PostTypeEnum::EXAM:
-                $classwork->questions()->saveMany(Question::getQuestionsFromRequest($request));
+                $classwork->questions()->saveMany(Question::getQuestionsFromRequest($request->input('classwork.questions')));
                 break;
             case PostTypeEnum::QUESTION:
-                $classwork->answers()->saveMany(Question::getAnswersFromRequest($request));
+                $questionType = $request->input('classwork.questionType');
+                $answerDto = $request->input('classwork.answers');
+                $answers = Question::getAnswersFromRequest($answerDto, $questionType);
+                $classwork->answers()->saveMany($answers);
                 break;
             default:
                 break;

@@ -4,6 +4,8 @@ namespace App\Models;
 
 use App\Http\Controllers\Enums\QuestionTypeEnum;
 use App\Http\Requests\PostCreateRequest;
+use App\Services\ClassworkServices\Dto\CreateAnswerDto;
+use App\Services\ClassworkServices\Dto\CreateQuestionDto;
 use Illuminate\Database\Eloquent\Model;
 
 class Question extends Model
@@ -30,16 +32,24 @@ class Question extends Model
      * @param PostCreateRequest $request
      * @return array
      */
-    public static function getQuestionsFromRequest(PostCreateRequest $request): array
+    public static function getQuestionsFromRequest($questionDtosArray): array
     {
         $questions = array();
-        foreach ($request->input('questions') as $q) {
+        foreach ($questionDtosArray as $q) {
+            $questionType = QuestionTypeEnum::getEnumByName($q['questionType']);
+
             $question = new Question();
             $question->title = $q['title'];
             $question->description = $q['description'];
-            $question->question_type = $q['questionType'];
+            $question->question_type = $questionType;
             $question->point = 0;
             $question->guid = uniqid();
+
+            if ($questionType == QuestionTypeEnum::TRUE_FALSE || $questionType == QuestionTypeEnum::MULTI_CHOICE){
+                $answers = Question::getAnswersFromRequest($q['answer'], $q['questionType']);
+                $question->answers()->saveMany($answers);
+            }
+
             array_push($questions, $question);
         }
         return $questions;
@@ -51,20 +61,20 @@ class Question extends Model
      *
      * @param PostCreateRequest $request
      */
-    public static function getAnswersFromRequest(PostCreateRequest $request): array
+    public static function getAnswersFromRequest($answerDto, $questionType): array
     {
         $answers = array();
-        $questionType = QuestionTypeEnum::getEnumByName($request->input('classwork.questionType'));
+        $questionType = QuestionTypeEnum::getEnumByName($questionType);
 
-        $correctAnswerIndex = $request->input('classwork.answer.correctAnswerIndex');
+        $correctAnswerIndex = $answerDto['correctAnswerIndex'];
         if ($questionType == QuestionTypeEnum::TRUE_FALSE){
             $answers = Answer::createTrueFalseAnswer($correctAnswerIndex);
         }
 
         if ($questionType == QuestionTypeEnum::MULTI_CHOICE){
-            foreach ($request->input('classwork.answer.items') as $k => $a){
+            foreach ($answerDto['items'] as $k => $a){
                 $answer = new Answer();
-                $answer->answer_detail = $a;
+                $answer->answer_detail = $a['answerDetail'];
                 $answer->answer_order = $k;
                 $answer->is_correct = $k == $correctAnswerIndex;
                 $answer->guid = uniqid();
