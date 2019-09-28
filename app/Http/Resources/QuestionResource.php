@@ -23,6 +23,7 @@ class QuestionResource extends JsonResource
             'answers' => AnswerResource::collection($this->answers),
             'studentAnswers' => UserAnswerResource::collection($this->userAnswers),
             'postId' => $this->post->guid ?? null,
+            'examId' => $this->exam->guid ?? null,
             'createDate' => $this->created_at,
             'updateDate' => $this->updated_at
         ];

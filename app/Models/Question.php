@@ -32,7 +32,7 @@ class Question extends Model
      * @param PostCreateRequest $request
      * @return array
      */
-    public static function getQuestionsFromRequest($questionDtosArray): array
+    public static function saveExamQuestionsFromRequest($questionDtosArray, $examId): array
     {
         $questions = array();
         foreach ($questionDtosArray as $q) {
@@ -44,6 +44,8 @@ class Question extends Model
             $question->question_type = $questionType;
             $question->point = 0;
             $question->guid = uniqid();
+            $question->exam_id = $examId;
+            $question->save();
 
             if ($questionType == QuestionTypeEnum::TRUE_FALSE || $questionType == QuestionTypeEnum::MULTI_CHOICE){
                 $answers = Question::getAnswersFromRequest($q['answer'], $q['questionType']);

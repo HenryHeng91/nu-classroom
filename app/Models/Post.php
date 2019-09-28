@@ -91,17 +91,18 @@ class Post extends Model
 
         //Save classwork's related objects
         if ($type != PostTypeEnum::POST){
-            self::SaveClassworks($request, $classwork);
+            self::SaveClassworkItems($request, $classwork);
         }
 
         return $classwork;
     }
 
-    private static function SaveClassworks($request, $classwork){
+    private static function SaveClassworkItems($request, $classwork){
         $type = PostTypeEnum::getEnumByName($request->input('postType'));
         switch ($type){
             case PostTypeEnum::EXAM:
-                $classwork->questions()->saveMany(Question::getQuestionsFromRequest($request->input('classwork.questions')));
+                $questions = Question::saveExamQuestionsFromRequest($request->input('classwork.questions'), $classwork->id);
+                $classwork->questions->add($questions);
                 break;
             case PostTypeEnum::QUESTION:
                 $questionType = $request->input('classwork.questionType');

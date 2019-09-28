@@ -40,6 +40,7 @@ Route::group(['middleware' => 'apiAuth', 'prefix' => 'v1'], function () {
     Route::get('posts/{postId}/like', 'PostController@like');
     Route::get('posts/created', 'PostController@getUserCreatedPosts');
     Route::get('posts/class/{classId}', 'PostController@getPostsOfClass');
+    Route::get('posts/{guid}', 'PostController@show');
     Route::resource('posts', 'PostController');
 
     Route::delete('comments/{postId}', 'CommentController@destroy');

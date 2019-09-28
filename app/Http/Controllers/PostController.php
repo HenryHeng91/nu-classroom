@@ -79,12 +79,12 @@ class PostController extends Controller
             $newPost->guid = uniqid();
 
             if ($request->has('fileId')){
-                $file = File::where('guid', $request->input('classwork.fileId'))->first();
+                $file = File::where('guid', $request->input('fileId'))->first();
             }
 
             $newPost->save();
 
-            if ($request->has('classwork')) {
+            if ($request->has('classwork') ) {
                 $classwork = Post::ConvertRequestToClasswork($request, $newPost->id);
                 $newPost->classwork_id = $classwork->id ?? null;
                 if (!$classwork instanceof Question){
@@ -111,9 +111,14 @@ class PostController extends Controller
      * @param \App\Models\Post $post
      * @return void
      */
-    public function show(Post $post)
+    public function show($guid)
     {
-        //
+        $post = Post::where('guid', $guid)->first();
+        if (null == $post){
+            return response("Requested post with id '$guid' not found.", 400);
+        }
+
+        return new PostResource($post);
     }
 
     /**
