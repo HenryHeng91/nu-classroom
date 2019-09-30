@@ -17,11 +17,11 @@ class Assignment extends Model
     }
 
     public function post(){
-        return $this->hasOne('App\Models\Post');
+        return $this->hasOne('App\Models\Post', 'classwork_id', 'id');
     }
 
     public function file(){
-        return $this->hasOne('App\Models\File');
+        return $this->hasOne('App\Models\File', 'id', 'file_id');
     }
 
     public function assignmentSubmits(){

@@ -37,13 +37,14 @@ class PostCreateRequest extends AApiRequest
             'classwork.description' => 'required_with:classwork|string',
 
             // For classwork with type == Exam or Assignment
-            'classwork.startDate' => 'required_if:postType,=,ASSIGNMENT,EXAM|',
-            'classwork.endDate' => 'required_if:postType,=,ASSIGNMENT,EXAM',
+            'classwork.startDate' => 'required_if:postType,=,ASSIGNMENT,EXAM|date_format:Y-m-d H:i',
+            'classwork.endDate' => 'required_if:postType,=,ASSIGNMENT,EXAM|date_format:Y-m-d H:i',
 
             // For classwork with type == Exam
             'classwork.examDuration' => 'required_if:classwork.questionType,=,EXAM|integer',
             'classwork.showResultAt' => 'required_if:classwork.isAutoGrade,=,1|in:IMMEDIATE,EXAM_FINISH',
             'classwork.isAutoGrade' => 'required_if:classwork.questionType,=,EXAM|boolean',
+            'classwork.classworkNotify' => 'required_if:classwork.questionType,=,EXAM|date_format:Y-m-d H:i|nullable',
 
             // For Classwork with type question:
             'classwork.questions' => 'required_if:postType,=,EXAM|array',

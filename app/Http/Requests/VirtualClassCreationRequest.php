@@ -30,8 +30,8 @@ class VirtualClassCreationRequest extends FormRequest
             'organizationId' => 'string|exists:organizations,guid|nullable',
             'startDate' => 'date_format:Y-m-d|nullable',
             'endDate' => 'date_format:Y-m-d|after:start_date|required',
-            'classStartTime' => 'date_format:HH:MM|nullable',
-            'classEndTime' => 'date_format:HH:MM|nullable',
+            'classStartTime' => 'date_format:H:i|nullable',
+            'classEndTime' => 'date_format:H:i|nullable',
             'classDays' => 'string|nullable',
             'classBackgroundsId' => 'string|exists:class_backgrounds,guid|required'
         ];
