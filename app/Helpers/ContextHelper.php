@@ -37,23 +37,4 @@ class ContextHelper {
 
         return $return;
     }
-
-    /**Save an image to specific path
-     *
-     * @param $imageFile = Image file to be saved
-     * @param $destinationPath = Destination path to be saved
-     * @param string $imagePrefix = Prefix name of the image
-     * @return string
-     */
-    public static function SaveImageToPath($imageFile, $destinationPath, $imagePrefix = ''){
-        $defaultHeight = env('IMAGE_DEFAULT_HEIGHT');
-        $filename = $imagePrefix.uniqid().'.'.$imageFile->getClientOriginalExtension();
-        $imageFile = Image::make($imageFile->getRealPath())->resize(null, $defaultHeight, function ($constraint){
-            $constraint->aspectRatio();
-            $constraint->upsize();
-        });
-        $imageFile->save($destinationPath . $filename);
-        return $filename;
-    }
-
 }

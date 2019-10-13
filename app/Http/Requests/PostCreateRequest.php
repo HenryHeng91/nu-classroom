@@ -27,7 +27,7 @@ class PostCreateRequest extends AApiRequest
             'classId' => 'exists:virtual_classes,guid|nullable',
             'access' => 'in:PUBLIC,TEAM,PRIVATE|required',
             'postType' => 'in:POST,ASSIGNMENT,EXAM,QUESTION|required',
-            'classwork' => 'required_if:postType,<>,POST',
+            'classwork' => 'required_unless:postType,POST',
             'fileId' => 'exists:files,guid|nullable',
 
             /* Validation for post that contain a classwork

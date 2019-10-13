@@ -29,7 +29,7 @@ Route::group(['middleware' => 'apiAuth', 'prefix' => 'v1'], function () {
     Route::get('me/classmates', 'AppUserController@getClassmates');
     Route::get('me', 'AppUserController@show');
     Route::put('me', 'AppUserController@update');
-    Route::post('me/profilepicutre', 'AppUserController@uploadprofilepic');
+    Route::post('me/profilepicutre', 'AppUserController@uploadProfilePic');
     Route::delete('me', 'AppUserController@destroy');
 
     Route::get('posts/{postId}/likers', 'PostController@getLikers');
@@ -45,10 +45,12 @@ Route::group(['middleware' => 'apiAuth', 'prefix' => 'v1'], function () {
 
     Route::delete('comments/{postId}', 'CommentController@destroy');
 
+    Route::resource('files', 'FileController');
 
     Route::get('accesses', 'AccessController@index');
     Route::get('categories', 'CategoryController@index');
     Route::get('roles', 'RoleController@index');
     Route::get('statuses', 'StatusController@index');
+    Route::get('filetypes', 'FileTypeController@index');
 
 });

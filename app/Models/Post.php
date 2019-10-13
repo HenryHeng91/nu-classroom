@@ -106,7 +106,7 @@ class Post extends Model
                 break;
             case PostTypeEnum::QUESTION:
                 $questionType = $request->input('classwork.questionType');
-                $answerDto = $request->input('classwork.answers');
+                $answerDto = $request->input('classwork.answer');
                 $answers = Question::getAnswersFromRequest($answerDto, $questionType);
                 $classwork->answers()->saveMany($answers);
                 break;

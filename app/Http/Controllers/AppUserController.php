@@ -8,7 +8,8 @@ use App\Http\Resources\FriendUserResource;
 use App\Http\Resources\PostResource;
 use App\Models\AppUser;
 use App\Models\Post;
-use http\Exception;
+use App\Services\FileServices\ImageService;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
@@ -118,9 +119,9 @@ class AppUserController extends Controller
      * Get upload picture and set as profile picture for the request user.
      *
      * @param  \App\Models\AppUser  $appUser
-     * @return \Illuminate\Http\Response
+     * @return AppUserResource
      */
-    public function uploadprofilepic(Request $request)
+    public function uploadProfilePic(Request $request)
     {
         $user = AppUser::find(\ContextHelper::GetRequestUserId());
 
@@ -128,23 +129,20 @@ class AppUserController extends Controller
             return MakeHttpResponse(400, 'Fail', "No input name 'image_file' found!");
         }
 
-        $fileInput = $request->file('image_file');
         $destinationPath = public_path('images/avatars/');
         $defaultAvatar = 'avatar.png';
+        $fileInput = $request->file('image_file');
 
-        $validator = Validator::make(array('image_file'=>$fileInput), ['image_file' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:10240']);
-        if ($validator->fails()){
-            return MakeHttpResponse(400, 'Fail', $validator->errors()->all());
-        }
         try{
             if ($user->profile_pic && $user->profile_pic != $defaultAvatar){
                 File::delete($destinationPath.$user->profile_pic);
             }
+            $imageService = new ImageService();
 
-            $user->profile_pic = \ContextHelper::SaveImageToPath($fileInput, $destinationPath, 'avatar-');
+            $user->profile_pic = $imageService->SaveImageToPath($fileInput, $destinationPath, 'avatar-');
             $user->save();
         }catch (Exception $exception){
-            return MakeHttpResponse(400, 'Fail', $exception->getMessage());
+            return response($exception->getMessage(), 400);
         }
         return new AppUserResource($user);
 
