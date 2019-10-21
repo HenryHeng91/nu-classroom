@@ -104,7 +104,7 @@ class AppUserController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Get all user's classmates.
      *
      * @param  \App\Models\AppUser  $appUser
      * @return \Illuminate\Http\Response
@@ -113,6 +113,19 @@ class AppUserController extends Controller
     {
         $user = AppUser::find(\ContextHelper::GetRequestUserId());
         return FriendUserResource::collection($user->classmates()->paginate());
+    }
+
+    /**
+     * Get all user's posts even from any classes
+     *
+     * @param  \App\Models\AppUser  $appUser
+     * @return \Illuminate\Http\Response
+     */
+    public function getPosts()
+    {
+        $user = AppUser::find(\ContextHelper::GetRequestUserId());
+
+        return PostResource::collection($user->posts);
     }
 
     /**

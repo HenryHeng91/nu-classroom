@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ClassBackgroundResource;
 use App\Models\ClassBackground;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,7 @@ class ClassBackgroundController extends Controller
      */
     public function index()
     {
-        //
+        return ClassBackgroundResource::collection(ClassBackground::all());
     }
 
     /**

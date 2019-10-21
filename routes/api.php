@@ -26,6 +26,7 @@ Route::group(['middleware' => 'apiAuth', 'prefix' => 'v1'], function () {
     Route::get('classes/{classGuid}', 'VirtualClassController@show');
     Route::resource('classes', 'VirtualClassController');
 
+    Route::get('me/posts', 'AppUserController@getPosts');
     Route::get('me/classmates', 'AppUserController@getClassmates');
     Route::get('me', 'AppUserController@show');
     Route::put('me', 'AppUserController@update');
@@ -43,10 +44,13 @@ Route::group(['middleware' => 'apiAuth', 'prefix' => 'v1'], function () {
     Route::get('posts/{guid}', 'PostController@show');
     Route::resource('posts', 'PostController');
 
+
     Route::delete('comments/{postId}', 'CommentController@destroy');
 
     Route::resource('files', 'FileController');
 
+    Route::get('classbackgrounds', 'ClassBackgroundController@index');
+    Route::get('organizations', 'OrganizationController@index');
     Route::get('accesses', 'AccessController@index');
     Route::get('categories', 'CategoryController@index');
     Route::get('roles', 'RoleController@index');
