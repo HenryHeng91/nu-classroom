@@ -29,7 +29,7 @@ Route::group(['middleware' => 'apiAuth', 'prefix' => 'v1'], function () {
     Route::get('me/posts', 'AppUserController@getPosts');
     Route::get('me/classmates', 'AppUserController@getClassmates');
     Route::get('me', 'AppUserController@show');
-    Route::put('me', 'AppUserController@update');
+    Route::post('me', 'AppUserController@update');
     Route::post('me/profilepicutre', 'AppUserController@uploadProfilePic');
     Route::delete('me', 'AppUserController@destroy');
 
