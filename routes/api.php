@@ -44,6 +44,9 @@ Route::group(['middleware' => 'apiAuth', 'prefix' => 'v1'], function () {
     Route::get('posts/{guid}', 'PostController@show');
     Route::resource('posts', 'PostController');
 
+    Route::post('questions/submit', 'QuestionController@submitAnswer');
+
+
 
     Route::delete('comments/{postId}', 'CommentController@destroy');
 
