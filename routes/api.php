@@ -45,6 +45,8 @@ Route::group(['middleware' => 'apiAuth', 'prefix' => 'v1'], function () {
     Route::resource('posts', 'PostController');
 
     Route::post('questions/submit', 'QuestionController@submitAnswer');
+    Route::post('assignments/submit', 'AssignmentController@submitAssignment');
+    Route::post('exams/{guid}/start', 'AssignmentController@submitAssignment');
 
 
 

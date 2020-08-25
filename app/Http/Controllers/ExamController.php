@@ -82,4 +82,22 @@ class ExamController extends Controller
     {
         //
     }
+
+    /**
+     * Request to start exam and note down the time
+     *
+     * @param  \App\Models\Exam  $exam
+     * @return \Illuminate\Http\Response
+     */
+    public function start($guid)
+    {
+        $exam = Exam::where('guid', $guid)->first();
+        if (null == $exam){
+            return response("Exam with id '$guid' not found.", 400);
+        }
+
+        
+    }
+
+
 }

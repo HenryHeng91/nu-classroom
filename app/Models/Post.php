@@ -67,6 +67,10 @@ class Post extends Model
                 break;
             case PostTypeEnum::EXAM:
                 $classwork = new Exam();
+                $classwork->duration = $request->input('classwork.examDuration');
+                $classwork->show_result_at = $request->input('classwork.showResultAt');
+                $classwork->auto_grade = $request->input('classwork.isAutoGrade');
+                $classwork->exam_notify = $request->input('classwork.classworkNotify');
                 break;
             case PostTypeEnum::QUESTION:
                 $classwork = new Question();
